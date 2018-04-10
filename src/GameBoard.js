@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Tile from "./Tile";
-import PropTypes from "prop-types";
 
 class GameBoard extends Component {
   constructor(props) {
@@ -23,7 +22,7 @@ class GameBoard extends Component {
         { id: 12, status: "notShowing", backgroundColor: "brown" },
         { id: 13, status: "notShowing", backgroundColor: "brown" },
         { id: 14, status: "notShowing", backgroundColor: "cyan" },
-        { id: 15, status: "isShowing", backgroundColor: "cyan" }
+        { id: 15, status: "notShowing", backgroundColor: "cyan" }
       ]
     };
   }
@@ -32,22 +31,48 @@ class GameBoard extends Component {
     this.shuffleCards(this.state.board);
   }
 
-  shuffleCards = array => {
-    for (let i = array.length - 1; i > 0; i--) {
+  shuffleCards = board => {
+    for (let i = board.length - 1; i > 0; i--) {
       let j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
+      [board[i], board[j]] = [board[j], board[i]];
     }
-    this.setState({ board: array });
+    this.setState({ board });
   };
 
-  revealTile = id => {
+  revealTile = (id, color) => {
     const board = this.state.board.map(square => {
       if (square.id === id && square.status === "notShowing") {
         square.status = "isShowing";
       }
+      return square;
     });
+    this.setState({ board });
+    const clickedTiles = board.filter(tile => tile.status === "isShowing");
+    clickedTiles.length === 2 && this.checkForMatch(this.state.board, color);
+  };
 
-    this.setState({ ...board });
+  checkForMatch = (board, color) => {
+    const colors = board.filter(
+      tile => tile.backgroundColor === color && tile.status !== "notShowing"
+    );
+    if (colors.length > 1) {
+      const matchingTiles = this.state.board.filter(
+        tile =>
+          tile.backgroundColor === color && tile.status === "isShowing"
+            ? (tile.status = "matched")
+            : tile
+      );
+      this.setState({ board: matchingTiles });
+    }
+
+    setTimeout(() => {
+      // set isShowing's to notShowing
+      const showingTiles = board.filter(
+        tile =>
+          tile.status === "isShowing" ? (tile.status = "notShowing") : tile
+      );
+      this.setState({ board: showingTiles });
+    }, 1000);
   };
 
   render() {
@@ -63,7 +88,5 @@ class GameBoard extends Component {
     return <div className="board">{board}</div>;
   }
 }
-
-GameBoard.propTypes = {};
 
 export default GameBoard;

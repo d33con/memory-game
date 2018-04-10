@@ -16,11 +16,16 @@ const Tile = props => {
       className="tile"
       id={props.id}
       style={style}
-      onClick={() => props.revealTile(props.id)}
+      onClick={() => props.revealTile(props.id, props.backgroundColor)}
     />
   );
 };
 
-Tile.propTypes = {};
+Tile.propTypes = {
+  id: PropTypes.number.isRequired,
+  backgroundColor: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
+  revealTile: PropTypes.func.isRequired
+};
 
 export default Tile;
