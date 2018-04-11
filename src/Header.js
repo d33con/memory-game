@@ -1,16 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Header = props => {
+function Header(props) {
+  const { initializeBoard } = props;
   return (
     <header>
       <div>Memory Game</div>
-      <div className="btn" onClick={props.initializeBoard}>
+      <div className="btn" onClick={initializeBoard}>
         New Game
       </div>
     </header>
   );
-};
+}
 
 Header.propTypes = {
   initializeBoard: PropTypes.func.isRequired
