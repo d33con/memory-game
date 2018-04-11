@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Tile = props => {
+function Tile(props) {
   const style = {
     backgroundColor: ""
   };
@@ -19,7 +19,7 @@ const Tile = props => {
       onClick={() => props.revealTile(props.id, props.backgroundColor)}
     />
   );
-};
+}
 
 Tile.propTypes = {
   id: PropTypes.number.isRequired,
