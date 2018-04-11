@@ -4,8 +4,8 @@ import GameBoard from "./GameBoard";
 import "./App.css";
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       board: [
@@ -34,8 +34,9 @@ class App extends Component {
   }
 
   initializeBoard = () => {
-    this.state.board.map(tile => (tile.status = "notShowing"));
-    this.shuffleCards(this.state.board);
+    const { board } = this.state;
+    board.map(tile => (tile.status = "notShowing"));
+    this.shuffleCards(board);
   };
 
   shuffleCards = board => {
