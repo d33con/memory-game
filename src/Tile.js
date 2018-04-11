@@ -4,13 +4,8 @@ import PropTypes from "prop-types";
 function Tile(props) {
   const { id, backgroundColor, status, revealTile } = props;
   const style = {
-    backgroundColor: ""
+    backgroundColor: status === "notShowing" ? "gray" : backgroundColor
   };
-  if (status === "notShowing") {
-    style.backgroundColor = "gray";
-  } else {
-    style.backgroundColor = backgroundColor;
-  }
 
   return (
     <div
