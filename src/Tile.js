@@ -2,21 +2,22 @@ import React from "react";
 import PropTypes from "prop-types";
 
 function Tile(props) {
+  const { id, backgroundColor, status, revealTile } = props;
   const style = {
     backgroundColor: ""
   };
-  if (props.status === "notShowing") {
+  if (status === "notShowing") {
     style.backgroundColor = "gray";
   } else {
-    style.backgroundColor = props.backgroundColor;
+    style.backgroundColor = backgroundColor;
   }
 
   return (
     <div
       className="tile"
-      id={props.id}
+      id={id}
       style={style}
-      onClick={() => props.revealTile(props.id, props.backgroundColor)}
+      onClick={() => revealTile(id, backgroundColor)}
     />
   );
 }
