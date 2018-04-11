@@ -30,7 +30,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.shuffleCards(this.state.board);
+    this.initializeBoard();
   }
 
   initializeBoard = () => {
