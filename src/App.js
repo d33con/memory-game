@@ -7,6 +7,10 @@ class App extends Component {
   constructor(props) {
     super(props);
 
+    // tile status sets its background color
+    // notShowing: grey
+    // isShowing: backgroundColor
+    // matched: backgroundColor
     this.state = {
       board: [
         { id: 0, status: "notShowing", backgroundColor: "blue" },
@@ -55,14 +59,19 @@ class App extends Component {
       return square;
     });
     this.setState({ board });
+    // counts number of clicked tiles
     const clickedTiles = board.filter(tile => tile.status === "isShowing");
+    // when 2 tiles have been clicked check for a match
     clickedTiles.length === 2 && this.checkForMatch(board, color);
   };
 
   checkForMatch = (board, color) => {
+    // find all tiles with the same color that have been clicked
     const matchingColors = board.filter(
       tile => tile.backgroundColor === color && tile.status !== "notShowing"
     );
+    // 2 tiles of the same color have been clicked
+    // so set those tiles statuses to "matched"
     if (matchingColors.length > 1) {
       const setMatchingTiles = this.state.board.filter(
         tile =>
@@ -72,7 +81,7 @@ class App extends Component {
       );
       this.setState({ board: setMatchingTiles });
     }
-
+    // otherwise turn the clicked tiles back to grey after 1s
     setTimeout(() => {
       const newBoard = board.filter(
         tile =>
