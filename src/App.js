@@ -56,29 +56,29 @@ class App extends Component {
     });
     this.setState({ board });
     const clickedTiles = board.filter(tile => tile.status === "isShowing");
-    clickedTiles.length === 2 && this.checkForMatch(this.state.board, color);
+    clickedTiles.length === 2 && this.checkForMatch(board, color);
   };
 
   checkForMatch = (board, color) => {
-    const colors = board.filter(
+    const matchingColors = board.filter(
       tile => tile.backgroundColor === color && tile.status !== "notShowing"
     );
-    if (colors.length > 1) {
-      const matchingTiles = this.state.board.filter(
+    if (matchingColors.length > 1) {
+      const setMatchingTiles = this.state.board.filter(
         tile =>
           tile.backgroundColor === color && tile.status === "isShowing"
             ? (tile.status = "matched")
             : tile
       );
-      this.setState({ board: matchingTiles });
+      this.setState({ board: setMatchingTiles });
     }
 
     setTimeout(() => {
-      const showingTiles = board.filter(
+      const newBoard = board.filter(
         tile =>
           tile.status === "isShowing" ? (tile.status = "notShowing") : tile
       );
-      this.setState({ board: showingTiles });
+      this.setState({ board: newBoard });
     }, 1000);
   };
 
